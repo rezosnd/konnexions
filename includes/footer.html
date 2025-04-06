@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EASYBOOK</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font Awesome & Bootstrap -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --m: 4rem;
+    }
+
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: black;
+      color: #d5d5d5;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 300;
+      font-size: calc(0.3 * var(--m));
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    h2 {
+      font-weight: 500;
+      text-align: center;
+      font-size: var(--m);
+      margin: 0;
+    }
+
+    h3 {
+      font-weight: 500;
+      font-size: calc(0.6 * var(--m));
+      margin: 0;
+    }
+
+    main {
+      flex: 1;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    footer {
+      margin-top: auto;
+      width: 100%;
+      min-height: 40vh;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      align-items: flex-end;
+      padding: 5rem 2vw;
+      position: relative;
+      z-index: 500;
+    }
+
+    footer::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        rgba(0, 0, 0, 0) 5%,
+        rgba(0, 0, 0, 0.3) 20%,
+        rgba(0, 0, 0, 0.6) 30%,
+        rgba(0, 0, 0, 0.8) 40%,
+        rgba(0, 0, 0, 1) 50%,
+        rgb(0, 0, 0)
+      );
+      z-index: -7;
+    }
+
+    .backdrop {
+      z-index: -5;
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      mask-image: linear-gradient(
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0.5) 10%,
+        rgba(0, 0, 0, 0.8) 20%,
+        rgba(0, 0, 0, 1) 30%,
+        rgb(0, 0, 0)
+      );
+      -webkit-mask-image: linear-gradient(
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0.5) 10%,
+        rgba(0, 0, 0, 0.8) 20%,
+        rgba(0, 0, 0, 1) 30%,
+        rgb(0, 0, 0)
+      );
+    }
+
+    .col {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: calc(0.3 * var(--m)) calc(0.8 * var(--m));
+      width: 28%;
+    }
+
+    .col2,
+    .col3 {
+      background-color: #121212;
+      border-radius: calc(0.5 * var(--m));
+    }
+
+    img {
+      height: calc(0.3 * var(--m));
+      object-fit: cover;
+    }
+
+    .social {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      gap: 1rem;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .link {
+      width: calc(0.8 * var(--m));
+      height: calc(0.8 * var(--m));
+      background-color: rgba(246, 4, 4, 0.174);
+      border-radius: calc(0.1 * var(--m));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @media screen and (max-width: 1000px) {
+      :root {
+        --m: 3rem;
+      }
+    }
+
+    @media screen and (max-width: 700px) {
+      footer {
+        flex-direction: column;
+        padding: 5rem 20vw;
+      }
+
+      .col {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <footer>
+    <div class="col col1">
+      <h3>BOOKEASY</h3>
+      <p>Made with <span style="color: #BA6573;">❤</span> by Team Og's</p>
+      <div class="social">
+        <a href="#" target="_blank" class="link"><img src="https://assets.codepen.io/9051928/codepen_1.png" alt="CodePen" /></a>
+        <a href="#" target="_blank" class="link"><img src="https://assets.codepen.io/9051928/x.png" alt="Twitter/X" /></a>
+        <a href="#" target="_blank" class="link"><img src="https://assets.codepen.io/9051928/youtube_1.png" alt="YouTube" /></a>
+      </div>
+      <p style="color: #818181; font-size: smaller">2024 © All Rights Reserved</p>
+    </div>
+
+    <div class="col col2">
+      <a href="#"><p>About</p></a>
+      <a href="#"><p>Our mission</p></a>
+      <a href="#"><p>Privacy Policy</p></a>
+      <a href="#"><p>Terms of service</p></a>
+    </div>
+
+    <div class="col col3">
+      <a href="#"><p>Services</p></a>
+      <a href="#"><p>Products</p></a>
+      <a href="#"><p>Join our team</p></a>
+      <a href="#"><p>Partner with us</p></a>
+    </div>
+
+    <div class="backdrop"></div>
+  </footer>
+
+</body>
+</html>

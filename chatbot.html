@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    /* Reset some default styling */
+    body, h1 {
+        margin: 0;
+        padding: 0;
+    }
+    
+    /* Toggle Button */
+    .chatbot-toggler {
+        position: fixed;
+        right: 40px;
+        bottom: 35px;
+        height: 50px;
+        width: 50px;
+        color: #fff;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        outline: none;
+        cursor: pointer;
+        background: linear-gradient(
+    135deg,
+    rgba(255, 80, 80, 0.4),
+    rgba(255, 0, 0, 0.6));
+        border-radius: 50%;
+        transition: all 0.2s ease;
+        z-index: 9999;
+    }
+    .show-chatcontainer .chatbot-toggler {
+        transform: rotate(90deg);
+    }
+    .chatbot-toggler span {
+        position: absolute;
+    }
+    .chatbot-toggler img {
+        height: 51px;
+        width: 51px;
+    }
+    .chatbot-toggler span:last-child {
+        opacity: 0;
+    }
+    .show-chatcontainer .chatbot-toggler span:first-child,
+    .chatbot-toggler span:last-child {
+        opacity: 0;
+    }
+    .show-chatcontainer .chatbot-toggler span:last-child {
+        opacity: 1;
+    }
+    
+    /* Chat Container */
+    .chat-container {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  width: 340px;
+  transform: scale(0.5);
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 18px;
+  transform-origin: bottom right;
+  transition: all 0.2s ease;
+  z-index: 1000;
+  color: white;
+
+  background: rgba(0, 0, 0, 0.042); /* transparent black */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* When opened */
+.show-chatcontainer .chat-container {
+  transform: scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+    
+    .show-chatcontainer .chat-container {
+        transform: scale(1);
+        opacity: 1;
+        pointer-events: auto;
+    }
+    
+    /* Chat Header */
+    .header {
+        text-align: center;
+        background-color: transparent;
+        color: #fff;
+        padding: 8px 12px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+    
+    /* Messages */
+    .chat-messages {
+        overflow-y: auto;
+        padding: 10px;
+        height: 265px;
+        display: flex;
+        flex-direction: column;
+        color: azure;
+    }
+    
+    .message {
+        margin: 7px;
+        font-size: 1rem;
+        padding: 10px 14px;
+    }
+    
+    /* User and Bot Message Styles */
+    .input-message {
+        display: inline-block;
+        background-color: #abbbc0;
+        max-width: 75%;
+        align-self: flex-start;
+        margin: 5px 10px 7px 0;
+        border-radius: 10px 10px 10px 0;
+        color: #000;
+    }
+    
+    .output-message {
+        background: linear-gradient(
+    135deg,
+    rgba(255, 80, 80, 0.4),
+    rgba(255, 0, 0, 0.6)) ;
+        max-width: 75%;
+        align-self: flex-end;
+        margin: 10px 0px 10px 50px;
+        border-radius: 10px 10px 0 10px;
+        display: flex;
+        color: #fff;
+    }
+    
+    /* Input Area */
+    .chat-input {
+        display: flex;
+        padding: 10px;
+        background: transparent;
+        backdrop-filter: blur(5px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    #message-input {
+        flex: 1;
+        padding: 6px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+    
+    #send-button {
+        background: transparent;
+        border: none;
+    }
+    
+    .chat-input img {
+        height: 30px;
+        width: 35px;
+        transition: background 0.5s linear;
+    }
+    
+    .chat-input img:hover {
+        background:linear-gradient(
+    135deg,
+    rgba(255, 80, 80, 0.4),
+    rgba(255, 0, 0, 0.6))
+    }
+    </style>
+    
+<body>
+    <button class="chatbot-toggler">
+        <span><img src="images/message.jpg" alt="" srcset=""></span>
+        <span><img src="/images/cross.png" alt="" srcset=""></span>
+    </button>
+    <div class="chat-container">
+        <div class="header">
+            <h1>Chatbot</h1>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+        </div>
+        <div class="chat-input">
+            <input type="text" id="message-input" placeholder="Type your message...">
+            <button id="send-button"><img src="images/send.png" alt="" srcset=""></button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+<script>
+ const messageInput = document.getElementById('message-input');
+const sendButton = document.getElementById('send-button');
+const chatMessages = document.getElementById('chat-messages');
+const toggler = document.querySelector(".chatbot-toggler");
+
+sendButton.addEventListener('click', () => {
+    const messageText = messageInput.value.trim();
+    if (messageText !== '') {
+        const inputMessage = createMessage(messageText, 'input-message');
+        chatMessages.appendChild(inputMessage);
+
+        // Simulate bot response after a short delay
+        setTimeout(() => {
+            let responseText = '';
+            const lowerText = messageText.toLowerCase();
+
+            // === If-else Chatbot Logic ===
+            if (lowerText.includes("hello") || lowerText.includes("hi")) {
+                responseText = "Hey there! How can I assist you today?";
+            } else if (lowerText.includes("how are you")) {
+                responseText = "I'm a bot, so always running on full battery! 😄";
+            } else if (lowerText.includes("your name")) {
+                responseText = "I'm your smart chatbot assistant! You can call me RezoBot.";
+            } else if (lowerText.includes("my name")) {
+                responseText = "I might not know your name yet. Want to tell me?";
+            } else if (lowerText.includes("time")) {
+                const now = new Date();
+                responseText = "The current time is " + now.toLocaleTimeString();
+            } else if (lowerText.includes("date")) {
+                const today = new Date();
+                responseText = "Today is " + today.toDateString();
+            } else if (lowerText.includes("book gym")) {
+                responseText = "Gym booking requested! Let me know the date and time.";
+            } else if (lowerText.includes("book wedding") || lowerText.includes("wedding hall")) {
+                responseText = "Planning a wedding? Great! Please share the date and guest count.";
+            } else if (lowerText.includes("book cafe") || lowerText.includes("cafe")) {
+                responseText = "You'd like to reserve a café table? Tell me how many people and the time.";
+            } else if (lowerText.includes("weather")) {
+                responseText = "I can't check the live weather yet, but it’s always sunny in here! ☀️";
+            } else if (lowerText.includes("where are you")) {
+                responseText = "I'm living in the cloud ☁️, floating above your screen.";
+            } else if (lowerText.includes("joke")) {
+                responseText = "Why don’t robots get tired? Because they recharge during coffee breaks! 🤖☕";
+            } else if (lowerText.includes("thank")) {
+                responseText = "You're most welcome! Let me know if you need anything else.";
+            } else if (lowerText.includes("bye")) {
+                responseText = "Goodbye! Stay awesome. ✨";
+            } else {
+                responseText = "Sorry, I didn’t get that. Try asking something else!";
+            }
+
+            const outputMessage = createMessage(responseText, 'output-message');
+            chatMessages.appendChild(outputMessage);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 500);
+
+        messageInput.value = '';
+    }
+});
+
+function createMessage(text, className) {
+    const messageDiv = document.createElement('div');
+    messageDiv.textContent = text;
+    messageDiv.classList.add('message', className);
+    return messageDiv;
+}
+
+// Toggle chat container
+toggler.addEventListener("click", () => document.body.classList.toggle("show-chatcontainer"));
+
+</script>
+</html>

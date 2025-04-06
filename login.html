@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+  <!-- Fonts and Styles -->
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Neuton&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Neuton', serif;
+      background: #090d00;
+      overflow-x: hidden;
+      color: white;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+    }
+
+    section, header, footer, .login-container, .chatbot-container, .aboutus {
+      position: relative;
+      z-index: 1;
+    }
+
+    .login-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 80vh;
+      padding-top: 80px;
+    }
+
+    .login-box {
+      background: rgb(255, 0, 0);
+      backdrop-filter: blur(15px);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .login-box h2 {
+      font-family: 'Oswald', sans-serif;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .form-control {
+      background: rgb(248, 1, 1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-konnex {
+      background-color: #ff003c;
+      border: none;
+      width: 100%;
+      font-weight: bold;
+      padding: 12px;
+      color: white;
+    }
+
+    .btn-konnex:hover {
+      background-color: #ff3366;
+    }
+
+    .logo span {
+      background: linear-gradient(90deg, red, black, red);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: moveLight 3s linear infinite;
+      font-weight: bold;
+      font-size: 28px;
+      font-family: 'Oswald', sans-serif;
+    }
+
+    @keyframes moveLight {
+      0% { background-position: 0%; }
+      100% { background-position: 200%; }
+    }
+
+    #status {
+      text-align: center;
+      margin-top: 15px;
+      color: lightgreen;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+
+  <!-- Floating Chatbot -->
+  <iframe src="chatbot.html" style="position:fixed; bottom:0; right:0; border:none; width:400px; height:500px; z-index:9999; background:transparent;" allowtransparency="true"></iframe>
+
+  <!-- Header Navbar -->
+  <div id="header"></div>
+
+  <!-- Login Box -->
+  <div class="login-container">
+    <div class="login-box">
+      <h2>Login to EASYBOOK</h2>
+      <button onclick="signInWithGoogle()" class="btn btn-konnex">Sign in with Gmail(KIIT MAIL
+        )
+      </button>
+      <div id="status"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer"></div>
+
+  <!-- Firebase Config -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyB17ulIUF64dKcssoeEREQnNwjQh3emtao",
+      authDomain: "bookeasy-9dfa6.firebaseapp.com",
+      projectId: "bookeasy-9dfa6",
+      storageBucket: "bookeasy-9dfa6.appspot.com",
+      messagingSenderId: "520862502612",
+      appId: "1:520862502612:web:14333cffe2f2db37423541",
+      measurementId: "G-RKCXETVTQ3"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    function signInWithGoogle() {
+      firebase.auth().signInWithPopup(provider)
+        .then((result) => {
+          const user = result.user;
+          document.getElementById('status').innerText = "Login successful! Welcome, " + user.displayName;
+          setTimeout(() => {
+            window.location.href = "dashboard.html";
+          }, 1500);
+        })
+        .catch((error) => {
+          document.getElementById('status').innerText = "Login failed: TRY KIIT MAIL " + error.message;
+        });
+    }
+  </script>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenLite.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/easing/EasePack.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+  <script>
+    // Function to update nav link based on login status
+    function updateAuthLink() {
+      const authLink = document.getElementById("authLink");
+      const isLoggedIn = localStorage.getItem("loggedIn") === "true";
+  
+      if (isLoggedIn) {
+        authLink.innerHTML = '<i class="fas fa-sign-out-alt"></i>LOGOUT';
+        authLink.onclick = () => {
+          localStorage.removeItem("loggedIn");
+          updateAuthLink();
+          alert("Logged out!");
+        };
+      } else {
+        authLink.innerHTML = '<i class="fas fa-sign-in-alt"></i>LOGIN';
+        authLink.onclick = () => {
+          // Simulate login action
+          localStorage.setItem("loggedIn", "true");
+          updateAuthLink();
+          alert("Logged in!");
+        };
+      }
+    }
+  
+    // Call function on page load
+    document.addEventListener("DOMContentLoaded", updateAuthLink);
+    window.updateAuthLink = function () {
+  const authLink = document.getElementById("authLink");
+  const isLoggedIn = localStorage.getItem("loggedIn") === "true";
+
+  if (authLink) {
+    if (isLoggedIn) {
+      authLink.innerHTML = '<i class="fas fa-sign-out-alt"></i>LOGOUT';
+      authLink.onclick = () => {
+        localStorage.removeItem("loggedIn");
+        updateAuthLink();
+        alert("Logged out!");
+      };
+    } else {
+      authLink.innerHTML = '<i class="fas fa-sign-in-alt"></i>LOGIN';
+      authLink.onclick = () => {
+        localStorage.setItem("loggedIn", "true");
+        updateAuthLink();
+        alert("Logged in!");
+      };
+    }
+  }
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateAuthLink(); // Works if header.html is standalone
+});
+
+  </script>
+  
+  
+</body>
+</html>

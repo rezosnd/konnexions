@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Konnex</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Oswald:700|Neuton" rel="stylesheet" type="text/css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: black;
+      color: white;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+    body {
+  background: #090d00;
+}
+
+ * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font: 400 1em/1.5 "Neuton";
+      color: rgba(255, 255, 255, 0.85);
+      background: #090d00;
+      overflow-x: hidden;
+    }
+
+    #large-header {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background: #090d00;
+      z-index: 1;
+    }
+
+    canvas {
+      position: absolute;
+      display: block;
+      z-index: 1;
+    }
+.digital-artisan {
+  font: 400 1em/1.5 "Neuton", serif;
+  color: rgba(255,255,255,.25);
+  text-transform: uppercase;
+  letter-spacing: .5em;
+  display: inline-block;
+  border: 4px double rgba(255,255,255,.25);
+  border-width: 4px 0;
+  padding: 1.5em 0em;
+  margin-top: 80px;
+  width: 100%;
+  max-width: 640px;
+  position: relative;
+  z-index: 1;
+}
+
+.digital-artisan span {
+  font: 700 5em/1 "Oswald", sans-serif;
+  letter-spacing: 0.1em;
+  padding: .25em 0 .325em;
+  display: block;
+  margin: 0 auto;
+  text-shadow: 0 0 80px rgba(255,255,255,.5);
+
+  background: url("http://static.colourlovers.com/uploads/images/4/44/44982.pic.jpg") repeat-y;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: animateBG 1s linear infinite;
+  -webkit-transform: translate3d(0,0,0);
+  -webkit-backface-visibility: hidden;
+}
+
+/* Background animation */
+@-webkit-keyframes animateBG {
+  0% { background-position: -200% 50%; }
+  100% { background-position: 250% 50%; }
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+section, header, footer, .chatbot-container, .aboutus {
+  position: relative;
+  z-index: 1;
+}
+:root {
+	--bg: 25% 0.0075 70;
+	--pink: 77.75% 0.1003 350.51;
+	--gold: 84.16% 0.1169 71.19;
+	--mint: 84.12% 0.1334 165.28;
+
+	--mobile--w: 360px;
+	--mobile--h: 540px;
+
+	--outline-w: 9px;
+	--preview-bg: #fff;
+}
+.preview-wrapper {
+  padding: 6rem 1rem;
+  background: transparent;
+  position: relative;
+  z-index: 1;
+}
+.preview__container {
+	display: flex;
+	flex-wrap: wrap;
+	place-items: center;
+	place-content: center;
+	gap: 1.5rem;
+}
+
+.preview__container:has(:hover, :focus-within) .preview:not(:hover, :focus) {
+	opacity: 0.4;
+}
+
+.preview {
+	--bg-pos-y--start: 0;
+	--bg-pos-y--end: 0;
+	--bg-pos-y: var(--bg-pos-y--start);
+	--delay: 0;
+	--duration: 6s;
+
+	--shadow-blur: 24px;
+	--shadow-color: oklch(var(--bg));
+
+	background-image: var(--img);
+	background-position-y: var(--bg-pos-y);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+
+	border: var(--outline-w) solid var(--border-color, transparent);
+	border-radius: 6px;
+	box-shadow: 0 0 var(--shadow-blur) 0 var(--shadow-color);
+
+	transition: all 0.3s ease;
+	filter: grayscale(100%) sepia(5%);
+	mix-blend-mode: multiply;
+	opacity: 0.69;
+
+	scale: 0.85;
+	rotate: var(--rotation, -4deg);
+	outline: var(--outline-w) solid var(--preview-bg);
+	outline-offset: var(--outline-w);
+
+	min-height: var(--mobile--h);
+	width: var(--mobile--w);
+	position: relative;
+/* 
+	animation-name: bg-scroll; */
+	animation-delay: var(--delay);
+	animation-duration: var(--duration);
+	animation-fill-mode: forwards;
+}
+
+.preview:hover,
+.preview:focus-within {
+	--shadow-blur: 200px;
+	--shadow-color: oklch(var(--gold));
+	--border-color: var(--shadow-color);
+
+	background-color: white;
+	mix-blend-mode: initial;
+	filter: none;
+	opacity: 1;
+	outline-offset: calc(var(--outline-w) / 2);
+	scale: 1;
+	rotate: 0deg;
+	z-index: 6;
+}
+
+.preview:focus-within {
+	--shadow-color: oklch(var(--pink));
+	z-index: 7;
+}
+.preview:hover:focus {
+	--shadow-color: oklch(var(--mint));
+}
+
+.preview.mobile {
+	max-height: var(--mobile--h);
+	max-width: var(--mobile--w);
+}
+
+/* Scroll animation values for each preview */
+.preview:nth-of-type(2) {
+	--bg-pos-y--end: calc(var(--mobile--h) * -1.025);
+	--rotation: 3deg;
+}
+
+.preview:nth-of-type(3) {
+	--bg-pos-y--end: calc(var(--mobile--h) * -2.25);
+	--duration: 6.5s;
+	--rotation: -1deg;
+}
+
+.preview:nth-of-type(4) {
+	--bg-pos-y--end: calc(var(--mobile--h) * -3.75);
+	--duration: 6.75s;
+	--rotation: -5deg;
+}
+
+.preview:nth-of-type(5) {
+	--bg-pos-y--end: calc(var(--mobile--h) * -4.82);
+	--duration: 7s;
+	--rotation: -2deg;
+}
+
+.preview:nth-of-type(6) {
+	--bg-pos-y--end: calc(var(--mobile--h) * -5.85);
+	--duration: 7.25s;
+	--rotation: 2deg;
+}
+
+.preview:nth-of-type(7) {
+	--bg-pos-y--end: calc(var(--mobile--h) * -7.21);
+	--duration: 7.5s;
+	--rotation: 4deg;
+}
+
+@keyframes bg-scroll {
+	to {
+		background-position-y: var(--bg-pos-y--end);
+	}
+}
+.modal {
+  position: fixed;
+  z-index: 99999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+
+
+  </style>
+</head>
+<body>
+    <iframe src="chatbot.html" style="position:fixed; bottom:0; right:0; border:none; width:400px; height:500px; z-index:9999; background:transparent; pointer-events:auto;" allowtransparency="true"></iframe>
+    <canvas id="canvas"></canvas>
+
+
+  <!-- Header -->
+  <div id="header"></div>
+
+  <!-- Main content -->
+  <main class="container text-center mt-5">
+    <div class="digital-artisan">
+ <span>BOOKEASY</span>;
+    </div>
+  </main>
+  
+  
+  <!-- Google Font -->
+<link href="https://fonts.googleapis.com/css?family=Oswald:700|Neuton" rel="stylesheet" type="text/css">
+<section id="eventbooking" style="padding: 100px 20px; text-align: center;">
+    <h2>Event Booking</h2>
+    <p style="font-family: 'Neuton', serif; color: rgb(247, 246, 246); max-width: 700px; margin: auto;">
+      Book spaces for your favorite events — Gym sessions, Wedding venues, Parties, Corporate meetups and more — all in one place.
+    </p>
+  
+    <div class="digital-artisan">
+      RESERVE <span>ANYTIME</span> &mdash; FLEXIBLE SPACES &mdash;
+    </div>
+  
+    <section id="event-cards" class="preview-wrapper">
+      <div class="preview__container" style="display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 2rem; justify-content: center; align-items: center;">
+        
+        <!-- GYM -->
+        <div style="--img: url(images/gym.jpg); position: relative;" class="preview mobile" tabindex="0" onclick="showBookingOptions('Gym')">
+          <div class="preview-title">Gym Booking</div>
+          <div style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);">
+            <a href="javascript:void(0);" class="book-btn">Book Now</a>
+          </div>
+        </div>
+    
+        <!-- WEDDING -->
+        <div style="--img: url(images/wedding.jpg); position: relative;" class="preview mobile" tabindex="0" onclick="showBookingOptions('Wedding Hall')">
+          <div class="preview-title">Wedding Hall</div>
+          <div style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);">
+            <a href="javascript:void(0);" class="book-btn">Book Now</a>
+          </div>
+        </div>
+    
+        <!-- CAFFE -->
+        <div style="--img: url(images/caffe.jpg); position: relative;" class="preview mobile" tabindex="0" onclick="showBookingOptions('Caffe')">
+          <div class="preview-title">Caffe</div>
+          <div style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);">
+            <a href="javascript:void(0);" class="book-btn">Book Now</a>
+          </div>
+        </div>
+    
+      </div>
+    </section>
+    
+  
+  
+<section id="aboutus" style="padding: 100px 20px; text-align: center;">
+  <h2>About Us</h2>
+  <p style="font-family: 'Neuton', serif; color: rgba(255,255,255,.6); max-width: 700px; margin: auto;">
+    Welcome to our platform! We're on a mission to connect people through innovation.
+  </p>
+
+  <div class="digital-artisan">
+    SOLUTION <span>BOOKEASY</span> &mdash; TECH SUPPORT &mdash;
+  </div>
+  <section id="review" class="preview-wrapper">
+    <div class="preview__container" style="--img: url(images/review.jpg)">
+      <article class="preview mobile" tabindex="0"></article>
+      <article class="preview mobile" tabindex="0"></article>
+      <article class="preview mobile" tabindex="0"></article>
+      <article class="preview mobile" tabindex="0"></article>
+      <article class="preview mobile" tabindex="0"></article>
+      <article class="preview mobile" tabindex="0"></article>
+      <article class="preview mobile" tabindex="0"></article>	
+    </div>
+  </section>
+  
+
+
+  
+  
+
+  <!-- Footer -->
+  <div id="footer"></div>
+
+  <!-- Load Header and Footer -->
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Your custom JS (for animation) -->
+  
+
+<!-- Required GSAP libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenLite.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/easing/EasePack.min.js"></script>
+
+<script>
+    function openModal() {
+      document.getElementById('bookingModal').style.display = 'flex';
+    }
+  
+    function closeModal() {
+      document.getElementById('bookingModal').style.display = 'none';
+    }
+  
+    // Attach openModal to all Book buttons
+    document.querySelectorAll('.book-btn').forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        openModal();
+      });
+    });
+  </script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    function payNow() {
+      const options = {
+        key: "rzp_test_YourKeyHere", // Replace with your Razorpay Test key
+        amount: 50000, // in paisa: ₹500
+        currency: "INR",
+        name: "Konnex BookEasy",
+        description: "Event Booking Payment",
+        handler: function (response) {
+          alert("Payment Successful! ID: " + response.razorpay_payment_id);
+          closeModal();
+        },
+        prefill: {
+          name: document.querySelector('#bookingForm input[type="text"]').value,
+          email: document.querySelector('#bookingForm input[type="email"]').value
+        },
+        theme: {
+          color: "#EF4444"
+        }
+      };
+      const rzp = new Razorpay(options);
+      rzp.open();
+    }
+  </script>
+  
+
+<script src="script.js"></script>
+<!-- Popup Form Modal -->
+
+  <!-- Booking Modal -->
+<!-- Booking Modal -->
+<div id="bookingModal" class="modal" style="display: none; justify-content: center; align-items: center;">
+  <div class="modal-content bg-dark text-white p-4 rounded" style="max-width: 500px; width: 100%; position: relative;">
+    <span class="close" onclick="closeModal()" style="position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer;">&times;</span>
+    <h3 id="bookingTitle">Book a Service</h3>
+
+    <!-- Step 1: Category Selection -->
+    <div id="step1">
+      <label for="categorySelect">Select Service Type:</label>
+      <select id="categorySelect" class="form-control mb-3" required onchange="loadAddresses()">
+        <option value="" disabled selected>Select a category</option>
+        <option value="ZIM">ZIM</option>
+        <option value="Marriage Hall">Marriage Hall</option>
+        <option value="Cafe">Cafe</option>
+      </select>
+    </div>
+
+    <!-- Step 2: Address Selection -->
+    <div id="step2" style="display: none;">
+      <label for="addressSelect">Select Location:</label>
+      <select id="addressSelect" class="form-control mb-3" required onchange="loadStores()">
+        <option value="" disabled selected>Select a location</option>
+      </select>
+    </div>
+
+    <!-- Step 3: Store Selection -->
+    <div id="step3" style="display: none;">
+      <label for="storeSelect">Choose a Store:</label>
+      <select id="storeSelect" class="form-control mb-3" required onchange="showFinalForm()">
+        <option value="" disabled selected>Select a store</option>
+      </select>
+    </div>
+
+    <!-- Step 4: Booking Form -->
+    <form id="bookingForm" style="display: none;">
+      <div class="form-group">
+        <label for="userName">Your Name:</label>
+        <input type="text" class="form-control" id="userName" placeholder="Enter your name" required>
+      </div>
+      <div class="form-group">
+        <label for="bookingDate">Select Date:</label>
+        <input type="date" class="form-control" id="bookingDate" required>
+      </div>
+      <div class="form-group">
+        <label for="bookingTime">Select Time:</label>
+        <input type="time" class="form-control" id="bookingTime" required>
+      </div>
+      <button type="submit" class="btn btn-success mt-2">Confirm Booking</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  const storeData = {
+    ZIM: {
+      Andheri: ["ZIM Andheri", "PowerGym Andheri"],
+      Bandra: ["ZIM Bandra", "FitLife Bandra"],
+      Dadar: ["ZIM Dadar", "HealthHub Dadar"]
+    },
+    "Marriage Hall": {
+      Andheri: ["Royal Banquet", "Celebration Palace"],
+      Bandra: ["Grand Pavilion", "Bandra Bliss"],
+      Dadar: ["Dadar Celebrations", "Wedding Nest"]
+    },
+    Cafe: {
+      Andheri: ["BrewHouse", "Mocha Vibe"],
+      Bandra: ["Cafe Coffeeville", "The Bean Box"],
+      Dadar: ["Daily Grind", "Cafe Central"]
+    }
+  };
+
+  function showBookingOptions() {
+    document.getElementById("bookingModal").style.display = "flex";
+    document.getElementById("bookingTitle").innerText = `Book a Service`;
+    resetSteps();
+  }
+
+  function closeModal() {
+    document.getElementById("bookingModal").style.display = "none";
+  }
+
+  function resetSteps() {
+    document.getElementById("categorySelect").selectedIndex = 0;
+    document.getElementById("addressSelect").innerHTML = `<option value="" disabled selected>Select a location</option>`;
+    document.getElementById("storeSelect").innerHTML = `<option value="" disabled selected>Select a store</option>`;
+    document.getElementById("step1").style.display = "block";
+    document.getElementById("step2").style.display = "none";
+    document.getElementById("step3").style.display = "none";
+    document.getElementById("bookingForm").style.display = "none";
+  }
+
+  function loadAddresses() {
+    const category = document.getElementById("categorySelect").value;
+    const addressSelect = document.getElementById("addressSelect");
+
+    addressSelect.innerHTML = `<option value="" disabled selected>Select a location</option>`;
+
+    if (storeData[category]) {
+      Object.keys(storeData[category]).forEach(location => {
+        const option = document.createElement("option");
+        option.value = location;
+        option.textContent = location;
+        addressSelect.appendChild(option);
+      });
+
+      document.getElementById("step2").style.display = "block";
+    }
+  }
+
+  function loadStores() {
+    const category = document.getElementById("categorySelect").value;
+    const location = document.getElementById("addressSelect").value;
+    const storeSelect = document.getElementById("storeSelect");
+
+    storeSelect.innerHTML = `<option value="" disabled selected>Select a store</option>`;
+
+    if (storeData[category][location]) {
+      storeData[category][location].forEach(store => {
+        const option = document.createElement("option");
+        option.value = store;
+        option.textContent = store;
+        storeSelect.appendChild(option);
+      });
+
+      document.getElementById("step3").style.display = "block";
+    }
+  }
+
+  function showFinalForm() {
+    document.getElementById("bookingForm").style.display = "block";
+  }
+
+  document.getElementById("bookingForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const name = document.getElementById("userName").value;
+    const date = document.getElementById("bookingDate").value;
+    const time = document.getElementById("bookingTime").value;
+    const category = document.getElementById("categorySelect").value;
+    const location = document.getElementById("addressSelect").value;
+    const store = document.getElementById("storeSelect").value;
+
+    alert(`Booking Confirmed!\nName: ${name}\nCategory: ${category}\nLocation: ${location}\nStore: ${store}\nDate: ${date}\nTime: ${time}`);
+    closeModal();
+  });
+
+  // Close on outside click
+  window.onclick = function (event) {
+    const modal = document.getElementById("bookingModal");
+    if (event.target === modal) {
+      closeModal();
+    }
+  };
+</script>
+<script>
+  // Load header.html dynamically into the page
+  $(function () {
+    $("#header").load("header.html", function () {
+      // Run this after header is loaded
+      firebase.auth().onAuthStateChanged((user) => {
+        const authLink = document.getElementById("authLink");
+        if (user) {
+          // User is signed in
+          localStorage.setItem("loggedIn", "true");
+          authLink.innerHTML = '<i class="fas fa-sign-out-alt"></i>LOGOUT';
+          authLink.onclick = () => {
+            firebase.auth().signOut().then(() => {
+              localStorage.removeItem("loggedIn");
+              window.location.reload();
+            });
+          };
+        } else {
+          // Not signed in
+          authLink.innerHTML = '<i class="fas fa-sign-in-alt"></i>LOGIN';
+          authLink.onclick = () => {
+            // Optionally redirect to login page
+            window.location.href = "login.html";
+          };
+        }
+      });
+    });
+  });
+  </script>
+  
+
+</script>
+
+
+</body>
+</html>
